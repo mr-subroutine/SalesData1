@@ -18,7 +18,7 @@ namespace SalesData1
             InitializeComponent();
         }
 
-        bool isButton1Clicked = false;
+        bool wasFileCreateBtnPressed = false;
         string[] workerNames = new string[4];
         string[] daysOfWeek = new string[5];
         int[,] salesDataNumbers = new int[3, 4];
@@ -35,11 +35,12 @@ namespace SalesData1
                 "Jim", "Kristina", "Darryl", "William", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
             string fileCheck = fileLocation;
-            if (File.Exists(fileCheck) && isButton1clicked == true)
+            if (isButton1clicked == true && !File.Exists(fileLocation))
             {
-                MessageBox.Show("The file already exists");
-                isButton1Clicked = true;
+                File.WriteAllLines(@fileLocation, fileData);
+                MessageBox.Show("Data File Created!");
             }
+
 
             else if (!File.Exists(fileCheck) && isButton1clicked == true)
             {
@@ -47,7 +48,7 @@ namespace SalesData1
                 MessageBox.Show("Data File Created!");
             }
 
-            else if (!File.Exists(fileCheck) && isButton1clicked == false)
+            else if (!File.Exists(fileCheck))
             {
                 MessageBox.Show("Please click Create File button first.");
             }
@@ -56,31 +57,32 @@ namespace SalesData1
         private void button1_Click(object sender, EventArgs e)
         {
             // bool to check if create file has been clicked
-            isButton1Clicked = true;
-            createFile(isButton1Clicked);
+            wasFileCreateBtnPressed = true;
+            createFile(wasFileCreateBtnPressed);
         }
 
         private void displaylabelTop()
         {
-            textBoxInfo.Text += "-Sales Data-";
+            textBoxInfo.Text += "-Sales Data-" + Environment.NewLine;
         }
 
         private void txtBoxBasicInfo_Click(object sender, EventArgs e)
         {
-            if (isButton1Clicked == false)
+            createFile(wasFileCreateBtnPressed);
+            // checks if user hits button 2 first then it deletes any file there and forces user to create
+            if (wasFileCreateBtnPressed == false)
             {
                 string StartUpPath = Application.StartupPath;
                 string fileLocation = StartUpPath + @"\salesdata.txt";
                 File.Delete(fileLocation);
             }
+            
+            //createFile(wasFileCreateBtnPressed);
 
-            // bool to check if create file has been clicked, which it hasn't in this crease prompting user to create a file first.
-            //isButton1Clicked = false;
-            createFile(isButton1Clicked);
-            displaylabelTop();
-
-            if (isButton1Clicked == true)
+            if (wasFileCreateBtnPressed == true)
             {
+                // displays header info first
+                displaylabelTop();
                 // gathers data first storing into arrays in a method
                 storeAllData();
             }
