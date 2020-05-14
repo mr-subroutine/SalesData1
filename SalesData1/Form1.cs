@@ -19,9 +19,9 @@ namespace SalesData1
         }
 
         bool wasFileCreateBtnPressed = false;
-        int[,] salesDataNumbers = new int[3, 4];
-        string[] workerNames = new string[3];
-        string[] daysOfWeek = new string[4];
+        int[,] salesDataNumbers = new int[4, 5];
+        string[] workerNames = new string[4];
+        string[] daysOfWeek = new string[5];
 
         private void createFile(bool isButton1clicked)
         {
@@ -104,29 +104,35 @@ namespace SalesData1
             {
                 // Read and display lines from the file until the end of
                 // the file is reached.
-                for (int row = 0; row < 3 ; row++)
+                for (int row = 0; row < 4 ; row++)
                 {
-                    for (int col = 0; col < 4; col++)
+                    for (int col = 0; col < 5; col++)
                     {
                         salesDataNumbers[row, col] = Convert.ToInt32(read.ReadLine());
                     }
                 }
-
-                for (int row = 0; row < 3; row++)
+                // readline continues where it left off since file isn't closed and stores employee names
+                for (int row = 0; row < 4; row++)
                 {
                     workerNames[row] = read.ReadLine();
                 }
 
-                for (int row = 0; row < 4; row++)
+                // store days of week
+                for (int row = 0; row < 5; row++)
                 {
                     daysOfWeek[row] = read.ReadLine();
                 }
+                read.Close(); ;
             }
+        }
 
-            // store employee names
+        // write data to text box
+        private void writeToTextBox(string[] names, int[] sales, int days)
+        {
+            // print days
 
 
-            // store days of week
+            // print name and sales
         }
     }
 }
