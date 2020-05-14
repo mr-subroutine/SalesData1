@@ -19,9 +19,9 @@ namespace SalesData1
         }
 
         bool wasFileCreateBtnPressed = false;
-        string[] workerNames = new string[4];
-        string[] daysOfWeek = new string[5];
         int[,] salesDataNumbers = new int[3, 4];
+        string[] workerNames = new string[3];
+        string[] daysOfWeek = new string[4];
 
         private void createFile(bool isButton1clicked)
         {
@@ -35,17 +35,22 @@ namespace SalesData1
                 "Jim", "Kristina", "Darryl", "William", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
             string fileCheck = fileLocation;
-            if (isButton1clicked == true && !File.Exists(fileLocation))
+            if (File.Exists(fileCheck))
+            {
+                File.Delete(fileLocation);
+            }
+
+            if (isButton1clicked == false)
             {
                 File.WriteAllLines(@fileLocation, fileData);
                 MessageBox.Show("Data File Created!");
             }
 
-
-            else if (!File.Exists(fileCheck) && isButton1clicked == true)
+            else if (!File.Exists(fileCheck))
             {
                 File.WriteAllLines(@fileLocation, fileData);
                 MessageBox.Show("Data File Created!");
+                isButton1clicked = true;
             }
 
             else if (!File.Exists(fileCheck))
@@ -68,13 +73,13 @@ namespace SalesData1
 
         private void txtBoxBasicInfo_Click(object sender, EventArgs e)
         {
-            createFile(wasFileCreateBtnPressed);
             // checks if user hits button 2 first then it deletes any file there and forces user to create
             if (wasFileCreateBtnPressed == false)
             {
                 string StartUpPath = Application.StartupPath;
                 string fileLocation = StartUpPath + @"\salesdata.txt";
                 File.Delete(fileLocation);
+                MessageBox.Show("Please click Create File button first.");
             }
             
             //createFile(wasFileCreateBtnPressed);
@@ -107,9 +112,14 @@ namespace SalesData1
                     }
                 }
 
+                for (int row = 0; row < 3; row++)
+                {
+                    workerNames[row] = read.ReadLine();
+                }
+
                 for (int row = 0; row < 4; row++)
                 {
-
+                    daysOfWeek[row] = read.ReadLine();
                 }
             }
 
