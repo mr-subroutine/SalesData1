@@ -54,7 +54,7 @@
             this.btn_create_file.Name = "btn_create_file";
             this.btn_create_file.Size = new System.Drawing.Size(158, 47);
             this.btn_create_file.TabIndex = 2;
-            this.btn_create_file.Text = "Create File";
+            this.btn_create_file.Text = "Create Test File";
             this.btn_create_file.UseVisualStyleBackColor = true;
             this.btn_create_file.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -76,6 +76,7 @@
             this.btn_average.TabIndex = 4;
             this.btn_average.Text = "Average Sales";
             this.btn_average.UseVisualStyleBackColor = true;
+            this.btn_average.Click += new System.EventHandler(this.btn_average_Click);
             // 
             // btn_clear
             // 
@@ -123,6 +124,7 @@
             this.btn_seperate_totals.TabIndex = 9;
             this.btn_seperate_totals.Text = "Individual Totals";
             this.btn_seperate_totals.UseVisualStyleBackColor = true;
+            this.btn_seperate_totals.Click += new System.EventHandler(this.btn_seperate_totals_Click);
             // 
             // Form1
             // 

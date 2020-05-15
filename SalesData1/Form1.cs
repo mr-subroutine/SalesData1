@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,12 +24,14 @@ namespace SalesData1
         int[,] salesDataNumbers = new int[4, 5];
         string[] workerNames = new string[4];
         string[] daysOfWeek = new string[5];
+        int totalSales = 0;
+        int getAverage = 0;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             string StartUpPath = Application.StartupPath;
             string fileLocation = StartUpPath + @"\salesdata.txt";
-            
+
             // 1 delete any previous sales file
             File.Delete(fileLocation);
 
@@ -68,7 +71,15 @@ namespace SalesData1
         // clear form
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            
+            textBoxInfo.Clear();
+            lockButtonSecurity();
+
+            string StartUpPath = Application.StartupPath;
+            string fileLocation = StartUpPath + @"\salesdata.txt";
+            File.Delete(fileLocation);
+
+            // unlocks create button for return to initial state
+            btn_create_file.Enabled = true;
         }
 
         // Close Form
@@ -85,8 +96,8 @@ namespace SalesData1
             string fileCheck = fileLocation;
 
             // creates a file (this is needed so the application can be self-reliant)
-            string[] fileData = {"100", "70", "80", "60", "70", "90",
-                "100", "100", "95", "50", "70", "80", "90", "100", "51", "70", "75", "70", "80", "90",
+            string[] fileData = {"200", "170", "180", "160", "170", "190",
+                "130", "250", "195", "50", "180", "180", "190", "110", "51", "170", "75", "170", "180", "190",
                 "Jim", "Kathleen", "Darryl", "William", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
             File.WriteAllLines(@fileLocation, fileData);
@@ -142,7 +153,7 @@ namespace SalesData1
         }
 
         // write data to text box
-        private void writeToDisplay(string[] names, int[,] sales, string[] days)
+        private void writeToDisplay(string[] names, int[,] sales, string[] daysOfweek)
         {
             // displays header info first
             displaylabelTop();
@@ -152,14 +163,11 @@ namespace SalesData1
             for (int i = 0; i < 5; i++)
             {
                 textBoxInfo.Text += "\t";
-                textBoxInfo.Text += days[i];
-                textBoxInfo.Text += "\t";
+                textBoxInfo.Text += daysOfweek[i] + "\t";
             }
 
             textBoxInfo.Text += Environment.NewLine;
-            // print name and sales
-            int nameLength = names.Length;
-
+            // print table with names and sales
             for (int row = 0; row < 4; row++)
             {
                 textBoxInfo.Text += Environment.NewLine;
@@ -169,7 +177,7 @@ namespace SalesData1
                 for (int col = 0; col < 5; col++)
                 {
                     textBoxInfo.Text += "\t";
-                    textBoxInfo.Text += sales[row, col].ToString("n");
+                    textBoxInfo.Text += sales[row, col].ToString("c");
                     textBoxInfo.Text += "\t";
                 }
             }
@@ -178,7 +186,6 @@ namespace SalesData1
         private void btn_total_sales_Click(object sender, EventArgs e)
         {
             btn_total_sales.Enabled = false;
-            int totalSales = 0;
             for (int row = 0; row < 4; row++)
             {
                 for (int col = 0; col < 5; col++)
@@ -186,15 +193,75 @@ namespace SalesData1
                     totalSales += salesDataNumbers[row, col];
                 }
             }
-            textBoxInfo.Text += Environment.NewLine;
-            textBoxInfo.Text += "Group Total Sales Data: " + totalSales;
+            textBoxInfo.Text += "\r\n";
+            textBoxInfo.Text += "\r\n" + "Group Total Sales: " +  totalSales.ToString("c");
+        }
+
+        // button 3 
+        private void btn_average_Click(object sender, EventArgs e)
+        {
+            for (int row = 0; row < 4; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    totalSales += salesDataNumbers[row, col];
+                }
+            }
+            getAverage = totalSales / 20;
+            textBoxInfo.Text += "\r\n";
+            textBoxInfo.Text += "\r\n" + "Average Daily Sales: " + getAverage.ToString("c") + Environment.NewLine;
+            btn_average.Enabled = false;
+        }
+
+        private void btn_seperate_totals_Click(object sender, EventArgs e)
+        {
+            displayIndiTotals(workerNames, salesDataNumbers);
+        }
+
+        private void displayIndiTotals(string[] names, int[,] sales)
+        {
+            btn_seperate_totals.Enabled = false;
+            textBoxInfo.Text += Environment.NewLine + "Individual Sales Totals: ";
+
+            int singleTotal = 0;
+            for (int row = 0; row < 4; row++)
+            {
+                textBoxInfo.Text += Environment.NewLine + names[row];
+                textBoxInfo.Text += "\t";
+
+                for (int col = 0; col < 5; col++)
+                {
+                    int count = 0;
+                    if (count < 5)
+                    {
+                        singleTotal += salesDataNumbers[row, col];
+                    }
+                    count++;
+
+                    if (col == 4)
+                    {
+                        textBoxInfo.Text += "Sales Total: " + singleTotal.ToString("c");
+                        singleTotal = 0;
+                    }
+                }
+            }
+        }
+
+        private void displayHighest()
+        {
+
+        }
+
+        private void displayLowest()
+        {
+
         }
     }
 }
 
 // Display Sales (basic, all sales each day) x
 // Highest Total Sales for Everyone All Days x
-// Average Sales Total for Everyone
+// Average Sales Total for Everyone x 
 // Lowest Sale Day and Salesperson
 // Highest Sales Day and Salesperson
 // Total Sales Overall
