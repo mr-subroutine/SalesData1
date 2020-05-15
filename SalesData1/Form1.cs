@@ -18,46 +18,57 @@ namespace SalesData1
             InitializeComponent();
         }
 
-        bool wasFileCreateBtnPressed = false;
+        // disable all buttons except create button
+
         int[,] salesDataNumbers = new int[4, 5];
         string[] workerNames = new string[4];
         string[] daysOfWeek = new string[5];
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string StartUpPath = Application.StartupPath;
+            string fileLocation = StartUpPath + @"\salesdata.txt";
+            
+            // 1 delete any previous sales file
+            File.Delete(fileLocation);
+
+            // 2 locks all buttons on initial load
+            lockButtonSecurity();
+        }
+
+        private void lockButtonSecurity()
+        {
+            // disable all buttons but create
+            btn_total_sales.Enabled = false;
+            btn_average.Enabled = false;
+            btn_seperate_totals.Enabled = false;
+            btn_highest.Enabled = false;
+            btn_lowest.Enabled = false;
+            btn_clear.Enabled = false;
+        }
+
+        private void unlockButtonSecurity()
+        {
+            // disable all buttons but create
+            btn_total_sales.Enabled = true;
+            btn_average.Enabled = true;
+            btn_seperate_totals.Enabled = true;
+            btn_highest.Enabled = true;
+            btn_lowest.Enabled = true;
+            btn_clear.Enabled = true;
+        }
+
         // button 1
         private void button1_Click(object sender, EventArgs e)
         {
-            // bool to check if create file has been clicked
-            wasFileCreateBtnPressed = true;
-            btn_create_file.Enabled = false;
-            createFile(wasFileCreateBtnPressed);
-        }
-
-        // button 2
-        private void txtBoxBasicInfo_Click(object sender, EventArgs e)
-        {
-            btn_display_sales.Enabled = false;
-            // checks if user hits button 2 first then it deletes any file there and forces user to create
-            if (wasFileCreateBtnPressed == false)
-            {
-                MessageBox.Show("Please click Create File button first.");
-            }
-
-            //createFile(wasFileCreateBtnPressed);
-
-            if (wasFileCreateBtnPressed == true)
-            {
-                // gathers data first storing into arrays in a method
-                storeAllData();
-                writeToDisplay(workerNames, salesDataNumbers, daysOfWeek);
-            }
+            createFile();
+            writeToDisplay(workerNames, salesDataNumbers, daysOfWeek);
         }
 
         // clear form
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            textBoxInfo.Clear();
-            btn_display_sales.Enabled = true;
-            btn_create_file.Enabled = true;
+            
         }
 
         // Close Form
@@ -66,40 +77,25 @@ namespace SalesData1
             this.Close();
         }
 
-        private void createFile(bool isButton1clicked)
+        private void createFile()
         {
             // path to write files
             string StartUpPath = Application.StartupPath;
             string fileLocation = StartUpPath + @"\salesdata.txt";
+            string fileCheck = fileLocation;
 
             // creates a file (this is needed so the application can be self-reliant)
             string[] fileData = {"100", "70", "80", "60", "70", "90",
                 "100", "100", "95", "50", "70", "80", "90", "100", "51", "70", "75", "70", "80", "90",
                 "Jim", "Kathleen", "Darryl", "William", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
-            string fileCheck = fileLocation;
-            if (File.Exists(fileCheck))
-            {
-                File.Delete(fileLocation);
-            }
+            File.WriteAllLines(@fileLocation, fileData);
+            MessageBox.Show("Data File Created!");
+            btn_create_file.Enabled = false;
+            // gathers data first storing into arrays in a method
+            storeAllData();
+            unlockButtonSecurity();
 
-            if (isButton1clicked == false)
-            {
-                File.WriteAllLines(@fileLocation, fileData);
-                MessageBox.Show("Data File Created!");
-            }
-
-            else if (!File.Exists(fileCheck))
-            {
-                File.WriteAllLines(@fileLocation, fileData);
-                MessageBox.Show("Data File Created!");
-                isButton1clicked = true;
-            }
-
-            else if (!File.Exists(fileCheck))
-            {
-                MessageBox.Show("Please click Create File button first.");
-            }
         }
 
         private void storeAllData()
@@ -163,7 +159,7 @@ namespace SalesData1
             textBoxInfo.Text += Environment.NewLine;
             // print name and sales
             int nameLength = names.Length;
-          
+
             for (int row = 0; row < 4; row++)
             {
                 textBoxInfo.Text += Environment.NewLine;
@@ -178,11 +174,26 @@ namespace SalesData1
                 }
             }
         }
+
+        private void btn_total_sales_Click(object sender, EventArgs e)
+        {
+            btn_total_sales.Enabled = false;
+            int totalSales = 0;
+            for (int row = 0; row < 4; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    totalSales += salesDataNumbers[row, col];
+                }
+            }
+            textBoxInfo.Text += Environment.NewLine;
+            textBoxInfo.Text += "Group Total Sales Data: " + totalSales;
+        }
     }
 }
 
-// Display Sales (basic, all sales each day)
-// Highest Total Sales for Everyone All Days
+// Display Sales (basic, all sales each day) x
+// Highest Total Sales for Everyone All Days x
 // Average Sales Total for Everyone
 // Lowest Sale Day and Salesperson
 // Highest Sales Day and Salesperson

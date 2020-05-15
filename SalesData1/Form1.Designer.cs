@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.textBoxInfo = new System.Windows.Forms.TextBox();
-            this.btn_display_sales = new System.Windows.Forms.Button();
             this.btn_create_file = new System.Windows.Forms.Button();
             this.btn_total_sales = new System.Windows.Forms.Button();
             this.btn_average = new System.Windows.Forms.Button();
@@ -37,6 +36,7 @@
             this.btn_exit = new System.Windows.Forms.Button();
             this.btn_lowest = new System.Windows.Forms.Button();
             this.btn_highest = new System.Windows.Forms.Button();
+            this.btn_seperate_totals = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxInfo
@@ -44,18 +44,9 @@
             this.textBoxInfo.Location = new System.Drawing.Point(227, 41);
             this.textBoxInfo.Multiline = true;
             this.textBoxInfo.Name = "textBoxInfo";
-            this.textBoxInfo.Size = new System.Drawing.Size(672, 410);
+            this.textBoxInfo.ReadOnly = true;
+            this.textBoxInfo.Size = new System.Drawing.Size(672, 432);
             this.textBoxInfo.TabIndex = 0;
-            // 
-            // btn_display_sales
-            // 
-            this.btn_display_sales.Location = new System.Drawing.Point(34, 105);
-            this.btn_display_sales.Name = "btn_display_sales";
-            this.btn_display_sales.Size = new System.Drawing.Size(158, 47);
-            this.btn_display_sales.TabIndex = 1;
-            this.btn_display_sales.Text = "Display Sales Data File";
-            this.btn_display_sales.UseVisualStyleBackColor = true;
-            this.btn_display_sales.Click += new System.EventHandler(this.txtBoxBasicInfo_Click);
             // 
             // btn_create_file
             // 
@@ -75,6 +66,7 @@
             this.btn_total_sales.TabIndex = 3;
             this.btn_total_sales.Text = "Total Sales";
             this.btn_total_sales.UseVisualStyleBackColor = true;
+            this.btn_total_sales.Click += new System.EventHandler(this.btn_total_sales_Click);
             // 
             // btn_average
             // 
@@ -87,7 +79,7 @@
             // 
             // btn_clear
             // 
-            this.btn_clear.Location = new System.Drawing.Point(227, 466);
+            this.btn_clear.Location = new System.Drawing.Point(227, 489);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(75, 23);
             this.btn_clear.TabIndex = 5;
@@ -97,7 +89,7 @@
             // 
             // btn_exit
             // 
-            this.btn_exit.Location = new System.Drawing.Point(824, 466);
+            this.btn_exit.Location = new System.Drawing.Point(824, 489);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(75, 23);
             this.btn_exit.TabIndex = 6;
@@ -107,7 +99,7 @@
             // 
             // btn_lowest
             // 
-            this.btn_lowest.Location = new System.Drawing.Point(34, 366);
+            this.btn_lowest.Location = new System.Drawing.Point(34, 426);
             this.btn_lowest.Name = "btn_lowest";
             this.btn_lowest.Size = new System.Drawing.Size(158, 47);
             this.btn_lowest.TabIndex = 7;
@@ -116,18 +108,28 @@
             // 
             // btn_highest
             // 
-            this.btn_highest.Location = new System.Drawing.Point(34, 299);
+            this.btn_highest.Location = new System.Drawing.Point(34, 361);
             this.btn_highest.Name = "btn_highest";
             this.btn_highest.Size = new System.Drawing.Size(158, 47);
             this.btn_highest.TabIndex = 8;
             this.btn_highest.Text = "Highest Sales";
             this.btn_highest.UseVisualStyleBackColor = true;
             // 
+            // btn_seperate_totals
+            // 
+            this.btn_seperate_totals.Location = new System.Drawing.Point(34, 296);
+            this.btn_seperate_totals.Name = "btn_seperate_totals";
+            this.btn_seperate_totals.Size = new System.Drawing.Size(158, 47);
+            this.btn_seperate_totals.TabIndex = 9;
+            this.btn_seperate_totals.Text = "Individual Totals";
+            this.btn_seperate_totals.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(937, 519);
+            this.ClientSize = new System.Drawing.Size(937, 544);
+            this.Controls.Add(this.btn_seperate_totals);
             this.Controls.Add(this.btn_highest);
             this.Controls.Add(this.btn_lowest);
             this.Controls.Add(this.btn_exit);
@@ -135,11 +137,11 @@
             this.Controls.Add(this.btn_average);
             this.Controls.Add(this.btn_total_sales);
             this.Controls.Add(this.btn_create_file);
-            this.Controls.Add(this.btn_display_sales);
             this.Controls.Add(this.textBoxInfo);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sales Data1 v.1.0";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,7 +150,6 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBoxInfo;
-        private System.Windows.Forms.Button btn_display_sales;
         private System.Windows.Forms.Button btn_create_file;
         private System.Windows.Forms.Button btn_total_sales;
         private System.Windows.Forms.Button btn_average;
@@ -156,6 +157,7 @@
         private System.Windows.Forms.Button btn_exit;
         private System.Windows.Forms.Button btn_lowest;
         private System.Windows.Forms.Button btn_highest;
+        private System.Windows.Forms.Button btn_seperate_totals;
     }
 }
 
