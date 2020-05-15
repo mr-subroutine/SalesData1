@@ -97,7 +97,7 @@ namespace SalesData1
 
             // creates a file (this is needed so the application can be self-reliant)
             string[] fileData = {"200", "170", "180", "160", "170", "190",
-                "170", "250", "195", "50", "180", "180", "190", "110", "51", "170", "75", "170", "180", "190",
+                "170", "250", "195", "150", "180", "180", "190", "110", "51", "170", "75", "170", "50", "190",
                 "Jim", "Kathleen", "Darryl", "William", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
             File.WriteAllLines(@fileLocation, fileData);
