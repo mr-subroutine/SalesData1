@@ -138,3 +138,10 @@ namespace SalesData1
         }
     }
 }
+
+// Display Sales (basic, all sales each day)
+// Highest Total Sales for Everyone All Days
+// Average Sales Total for Everyone
+// Lowest Sale Day and Salesperson
+// Highest Sales Day and Salesperson
+// Total Sales Overall
