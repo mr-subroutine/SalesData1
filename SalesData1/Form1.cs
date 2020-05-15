@@ -23,6 +23,40 @@ namespace SalesData1
         string[] workerNames = new string[4];
         string[] daysOfWeek = new string[5];
 
+        // button 1
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // bool to check if create file has been clicked
+            wasFileCreateBtnPressed = true;
+            createFile(wasFileCreateBtnPressed);
+        }
+
+        private void displaylabelTop()
+        {
+            textBoxInfo.Text += "-Sales Data-" + Environment.NewLine;
+        }
+
+
+        // button 2
+        private void txtBoxBasicInfo_Click(object sender, EventArgs e)
+        {
+            // checks if user hits button 2 first then it deletes any file there and forces user to create
+            if (wasFileCreateBtnPressed == false)
+            {
+                MessageBox.Show("Please click Create File button first.");
+            }
+            
+            //createFile(wasFileCreateBtnPressed);
+
+            if (wasFileCreateBtnPressed == true)
+            {
+                // displays header info first
+                displaylabelTop();
+                // gathers data first storing into arrays in a method
+                storeAllData();
+            }
+        }
+
         private void createFile(bool isButton1clicked)
         {
             // path to write files
@@ -59,40 +93,6 @@ namespace SalesData1
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // bool to check if create file has been clicked
-            wasFileCreateBtnPressed = true;
-            createFile(wasFileCreateBtnPressed);
-        }
-
-        private void displaylabelTop()
-        {
-            textBoxInfo.Text += "-Sales Data-" + Environment.NewLine;
-        }
-
-        private void txtBoxBasicInfo_Click(object sender, EventArgs e)
-        {
-            // checks if user hits button 2 first then it deletes any file there and forces user to create
-            if (wasFileCreateBtnPressed == false)
-            {
-                string StartUpPath = Application.StartupPath;
-                string fileLocation = StartUpPath + @"\salesdata.txt";
-                File.Delete(fileLocation);
-                MessageBox.Show("Please click Create File button first.");
-            }
-            
-            //createFile(wasFileCreateBtnPressed);
-
-            if (wasFileCreateBtnPressed == true)
-            {
-                // displays header info first
-                displaylabelTop();
-                // gathers data first storing into arrays in a method
-                storeAllData();
-            }
-        }
-
         private void storeAllData()
         {
             // path to read file
@@ -123,11 +123,13 @@ namespace SalesData1
                     daysOfWeek[row] = read.ReadLine();
                 }
                 read.Close(); ;
+
+                // call writeToDisplay here
             }
         }
 
         // write data to text box
-        private void writeToTextBox(string[] names, int[] sales, int days)
+        private void writeToDisplay(string[] names, int[] sales, int days)
         {
             // print days
 
