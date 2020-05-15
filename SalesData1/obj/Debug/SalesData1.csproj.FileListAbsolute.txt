@@ -7,4 +7,3 @@ C:\Users\gamef\source\repos\SalesData1\SalesData1\obj\Debug\SalesData1.csproj.Ge
 C:\Users\gamef\source\repos\SalesData1\SalesData1\obj\Debug\SalesData1.csproj.CoreCompileInputs.cache
 C:\Users\gamef\source\repos\SalesData1\SalesData1\obj\Debug\SalesData1.exe
 C:\Users\gamef\source\repos\SalesData1\SalesData1\obj\Debug\SalesData1.pdb
-C:\Users\gamef\source\repos\SalesData1\SalesData1\obj\Debug\SalesData1.csprojAssemblyReference.cache

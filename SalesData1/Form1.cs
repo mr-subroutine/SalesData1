@@ -97,7 +97,7 @@ namespace SalesData1
 
             // creates a file (this is needed so the application can be self-reliant)
             string[] fileData = {"200", "170", "180", "160", "170", "190",
-                "130", "250", "195", "50", "180", "180", "190", "110", "51", "170", "75", "170", "180", "190",
+                "170", "250", "195", "50", "180", "180", "190", "110", "51", "170", "75", "170", "180", "190",
                 "Jim", "Kathleen", "Darryl", "William", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
             File.WriteAllLines(@fileLocation, fileData);
@@ -185,6 +185,7 @@ namespace SalesData1
 
         private void btn_total_sales_Click(object sender, EventArgs e)
         {
+            totalSales = 0;
             btn_total_sales.Enabled = false;
             for (int row = 0; row < 4; row++)
             {
@@ -249,12 +250,56 @@ namespace SalesData1
 
         private void displayHighest()
         {
+            int highestSales = -1;
+            string storeUser = "";
 
+            for (int row = 0; row < 4; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    if (highestSales < salesDataNumbers[row, col])
+                    {
+                        highestSales = salesDataNumbers[row, col];
+                        storeUser = workerNames[row];
+                    }
+                }
+            }
+
+            textBoxInfo.Text += "\r\n";
+            textBoxInfo.Text += "\r\n" + storeUser + " has highest sale at: " + highestSales.ToString("c");
+        }
+
+        private void btn_highest_Click(object sender, EventArgs e)
+        {
+            btn_highest.Enabled = false;
+            displayHighest();
         }
 
         private void displayLowest()
         {
+            int lowestSales = 150000;
+            string storeUser = "";
 
+            for (int row = 0; row < 4; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    if (lowestSales > salesDataNumbers[row, col])
+                    {
+                        lowestSales = salesDataNumbers[row, col];
+                        storeUser = workerNames[row];
+                    }
+                }
+            }
+
+            textBoxInfo.Text += "\r\n";
+            textBoxInfo.Text += "\r\n" + storeUser + " has lowest sale at: " + lowestSales.ToString("c");
+        }
+
+        private void btn_lowest_Click(object sender, EventArgs e)
+        {
+            btn_lowest.Enabled = false;
+            displayLowest();
         }
     }
 }

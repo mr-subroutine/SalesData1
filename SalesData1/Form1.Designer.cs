@@ -106,6 +106,7 @@
             this.btn_lowest.TabIndex = 7;
             this.btn_lowest.Text = "Lowest Sales";
             this.btn_lowest.UseVisualStyleBackColor = true;
+            this.btn_lowest.Click += new System.EventHandler(this.btn_lowest_Click);
             // 
             // btn_highest
             // 
@@ -115,6 +116,7 @@
             this.btn_highest.TabIndex = 8;
             this.btn_highest.Text = "Highest Sales";
             this.btn_highest.UseVisualStyleBackColor = true;
+            this.btn_highest.Click += new System.EventHandler(this.btn_highest_Click);
             // 
             // btn_seperate_totals
             // 
