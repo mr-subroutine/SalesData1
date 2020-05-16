@@ -139,8 +139,6 @@ namespace SalesData1
                     daysOfWeek[row] = read.ReadLine();
                 }
                 read.Close();
-
-                // call writeToDisplay here
             }
         }
 
@@ -303,10 +301,3 @@ namespace SalesData1
         }
     }
 }
-
-// Display Sales (basic, all sales each day) x
-// Highest Total Sales for Everyone All Days x
-// Average Sales Total for Everyone x 
-// Lowest Sale Day and Salesperson
-// Highest Sales Day and Salesperson
-// Total Sales Overall
